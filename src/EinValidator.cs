@@ -35,7 +35,9 @@ public class EinValidator : Validator.Validator, IEinValidator
         {
             for (var i = 0; i < 10; i++)
             {
-                if (i == 2) continue;
+                if (i == 2)
+                    continue;
+
                 if (!ein[i].IsDigit())
                     return false;
             }
