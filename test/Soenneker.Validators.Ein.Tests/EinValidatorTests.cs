@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using Soenneker.Tests.FixturedUnit;
 using Soenneker.Validators.Ein.Abstract;
 using Xunit;
