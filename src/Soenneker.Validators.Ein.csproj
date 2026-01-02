@@ -16,7 +16,7 @@
         <AssemblyName>Soenneker.Validators.Ein</AssemblyName>
         <PackageId>Soenneker.Validators.Ein</PackageId>
         <PackageTags>validators ein federal employee identification number validator einvalidator csharp dotnet c# .net</PackageTags>
-        <Copyright>Copyright © 2025 Jake Soenneker</Copyright>
+        <Copyright>Copyright © 2025-2026 Jake Soenneker</Copyright>
         <Authors>Jake Soenneker</Authors>
         <Company>https://soenneker.com</Company>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
