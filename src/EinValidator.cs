@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using Soenneker.Validators.Ein.Abstract;
 using Soenneker.Extensions.Char;
 using Soenneker.Extensions.String;
+using Soenneker.Validators.Ein.Abstract;
+using System;
 
 namespace Soenneker.Validators.Ein;
 
@@ -17,32 +18,33 @@ public sealed class EinValidator : Validator.Validator, IEinValidator
         if (ein.IsNullOrWhiteSpace())
             return false;
 
-        int len = ein.Length;
+        ReadOnlySpan<char> s = ein;
 
-        if (len == 9)
+        if ((uint)s.Length == 9u)
         {
-            for (var i = 0; i < 9; i++)
+            // all digits
+            for (int i = 0; i < 9; i++)
             {
-                if (!ein[i].IsDigit())
+                if (!s[i].IsDigitFast())
                     return false;
             }
 
-            int prefix = (ein[0] - '0') * 10 + (ein[1] - '0');
+            int prefix = (s[0] - '0') * 10 + (s[1] - '0');
             return IsValidPrefix(prefix);
         }
 
-        if (len == 10 && ein[2] == '-')
+        if ((uint)s.Length == 10u && s[2] == '-')
         {
-            for (var i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 if (i == 2)
                     continue;
 
-                if (!ein[i].IsDigit())
+                if (!s[i].IsDigitFast())
                     return false;
             }
 
-            int prefix = (ein[0] - '0') * 10 + (ein[1] - '0');
+            int prefix = (s[0] - '0') * 10 + (s[1] - '0');
             return IsValidPrefix(prefix);
         }
 
