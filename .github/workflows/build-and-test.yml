@@ -38,7 +38,7 @@ jobs:
         run: dotnet build test/Soenneker.Validators.Ein.Tests/Soenneker.Validators.Ein.Tests.csproj --configuration Release --no-restore --verbosity minimal
 
       - name: Test
-        run: dotnet test test/Soenneker.Validators.Ein.Tests/Soenneker.Validators.Ein.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
+        run: dotnet test --project test/Soenneker.Validators.Ein.Tests/Soenneker.Validators.Ein.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
 
       - name: Pack
         run: dotnet pack src/Soenneker.Validators.Ein/Soenneker.Validators.Ein.csproj --configuration Release --no-build --no-restore --output . --verbosity minimal
