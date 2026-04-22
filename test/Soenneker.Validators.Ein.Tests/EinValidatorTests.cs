@@ -1,21 +1,20 @@
-﻿using AwesomeAssertions;
-using Soenneker.Tests.FixturedUnit;
+using AwesomeAssertions;
+using Soenneker.Tests.HostedUnit;
 using Soenneker.Validators.Ein.Abstract;
-using Xunit;
 
 namespace Soenneker.Validators.Ein.Tests;
 
-[Collection("Collection")]
-public class EinValidatorTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public class EinValidatorTests : HostedUnitTest
 {
     private readonly IEinValidator _validator;
 
-    public EinValidatorTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public EinValidatorTests(Host host) : base(host)
     {
         _validator = Resolve<IEinValidator>(true);
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
@@ -58,14 +57,14 @@ public class EinValidatorTests : FixturedUnitTest
         result.Should().BeFalse();
     }
 
-    [Fact]
+    [Test]
     public void Validate_ValidEinWithDash_BoundaryPrefix_ShouldReturnTrue()
     {
         bool? result = _validator.Validate("01-0000000"); // smallest valid prefix
         result.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void Validate_ValidEinWithoutDash_MaxPrefix_ShouldReturnTrue()
     {
         bool? result = _validator.Validate("999999999"); // highest valid prefix
