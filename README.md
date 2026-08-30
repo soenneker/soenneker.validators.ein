@@ -5,7 +5,7 @@
 
 # Soenneker.Validators.Ein
 
-A validation module checking the syntax of Employer identification numbers (EINs).
+Validates US Employer Identification Number formatting and a built-in allowlist of EIN prefixes.
 
 ## Install
 
@@ -13,27 +13,33 @@ A validation module checking the syntax of Employer identification numbers (EINs
 dotnet add package Soenneker.Validators.Ein
 ```
 
-## Quick start
+## Registration
 
 ```csharp
 using Soenneker.Validators.Ein.Registrars;
 using Microsoft.Extensions.DependencyInjection;
 
-var services = new ServiceCollection();
-var result = services.AddEinValidatorAsSingleton();
+services.AddEinValidatorAsSingleton();
 ```
 
-Adds `IEinValidator` as a singleton service.
+The validator is stateless. Singleton registration is suitable for most applications; `AddEinValidatorAsScoped()` is also available.
 
-## What you get
+## Usage
 
-- `IEinValidator` — A validation module checking the syntax of Employer identification numbers (EINs).
-- `EinValidatorRegistrar` — A validation module checking the syntax of Employer identification numbers (EINs).
+```csharp
+using Soenneker.Validators.Ein.Abstract;
 
-## API at a glance
+bool compactIsValid = validator.Validate("123456789");
+bool formattedIsValid = validator.Validate("12-3456789");
+```
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `IEinValidator.Validate(ein)` | Validates whether the given EIN (Employer Identification Number) string is correctly formatted and contains a valid IRS-issued prefix. Supports both formats: "XXXXXXXXX" and "XX-XXXXXXX". | `true` if the EIN is properly formatted and has a valid prefix; `false` if the format or content is invalid; `null` is not returned in this implementation, though the return type allows it. |
-| `EinValidatorRegistrar.AddEinValidatorAsSingleton(services)` | Adds `IEinValidator` as a singleton service. | The same service collection, so additional registrations can be chained. |
-| `EinValidatorRegistrar.AddEinValidatorAsScoped(services)` | Adds `IEinValidator` as a scoped service. | The same service collection, so additional registrations can be chained. |
+Accepted input has one of two exact shapes:
+
+- nine ASCII digits: `XXXXXXXXX`
+- two ASCII digits, a hyphen, and seven ASCII digits: `XX-XXXXXXX`
+
+The first two digits must be present in the validator's compiled EIN prefix allowlist. Input is not trimmed or normalized; spaces, alternate separators, and surrounding text return `false`. Null, empty, or whitespace-only input also returns `false`.
+
+## What validation does not establish
+
+A `true` result does not prove that the IRS issued the EIN, that it belongs to a particular organization, or that it remains active. The validator performs no network lookup and has no ownership or identity verification. Prefix allocations can change independently of the package, so treat this as an input-shape check rather than authoritative tax-identity validation.

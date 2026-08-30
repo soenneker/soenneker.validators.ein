@@ -6,18 +6,12 @@ using System;
 
 namespace Soenneker.Validators.Ein;
 
-/// <inheritdoc cref="IEinValidator"/>
 public sealed class EinValidator : Validator.Validator, IEinValidator
 {
     public EinValidator(ILogger<EinValidator> logger) : base(logger)
     {
     }
 
-    /// <summary>
-    /// Validates ein Validator for the Ein Validator.
-    /// </summary>
-    /// <param name="ein">Employer Identification Number to validate.</param>
-    /// <returns>true if validates ein Validator for the Ein Validator; otherwise, false.</returns>
     public bool Validate(string? ein)
     {
         if (ein.IsNullOrWhiteSpace())

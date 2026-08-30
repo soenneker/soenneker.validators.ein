@@ -14,10 +14,6 @@ public interface IEinValidator : IValidator
     /// <param name="ein">
     /// The EIN string to validate. Can be null or whitespace, in which case the result is <c>false</c>.
     /// </param>
-    /// <returns>
-    /// <c>true</c> if the EIN is properly formatted and has a valid prefix; 
-    /// <c>false</c> if the format or content is invalid;
-    /// <c>null</c> is not returned in this implementation, though the return type allows it.
-    /// </returns>
-    bool Validate(string ein);
+    /// <returns><see langword="true"/> if the EIN has an accepted format and prefix; otherwise, <see langword="false"/>.</returns>
+    bool Validate(string? ein);
 }
