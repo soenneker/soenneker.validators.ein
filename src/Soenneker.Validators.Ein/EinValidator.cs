@@ -6,6 +6,7 @@ using System;
 
 namespace Soenneker.Validators.Ein;
 
+/// <inheritdoc cref="IEinValidator" />
 public sealed class EinValidator : Validator.Validator, IEinValidator
 {
     public EinValidator(ILogger<EinValidator> logger) : base(logger)
